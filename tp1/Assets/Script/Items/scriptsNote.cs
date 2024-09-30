@@ -26,4 +26,9 @@ public class scriptsNote : MonoBehaviour
     {
         GestionnaireUI.gestUI.AfficherNotes(messageNotes);
     }
+
+    public void DropPages()
+    {
+        GestionnaireUI.gestUI.RetirerNotes();
+    }
 }

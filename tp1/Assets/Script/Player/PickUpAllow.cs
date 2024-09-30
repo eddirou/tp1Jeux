@@ -18,7 +18,7 @@ public class PickUpAllow : MonoBehaviour
     {
         if (value)
         {
-            Invoke("DeactivatePickup", 1);
+            Invoke("DeactivatePickup",0.5f);
         }
 
         pickupAllowed = value;

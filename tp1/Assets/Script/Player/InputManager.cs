@@ -18,6 +18,7 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
+
         controls = new PlayerControls();
         groundMovement = controls.GroundMovement;
         interactionActions = controls.Interactions;
@@ -30,7 +31,10 @@ public class InputManager : MonoBehaviour
         groundMovement.MouseY.performed += ctx => mouseInput.y = ctx.ReadValue<float>();
 
 
+        //ligne de code pour interacation
         interactionActions.PickUp.performed += _ => pickUpAllow.SetPickupAlllowed(true);
+        scriptsNote note = new scriptsNote();
+        interactionActions.Drop.performed += _ => note.DropPages();
 
     }
 
