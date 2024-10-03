@@ -8,10 +8,16 @@ public class InputManager : MonoBehaviour
     [SerializeField] Movement movement;
     [SerializeField] MouseLook mouseLook;
     [SerializeField] PickUpAllow pickUpAllow;
+    [SerializeField] Weapon weapons;
+    [SerializeField] Melee melee;
+    [SerializeField] Switch weaponSwitch;
     PlayerControls controls;
     PlayerControls.GroundMovementActions groundMovement;
     PlayerControls.InteractionsActions interactionActions;
-    
+    PlayerControls.WeaponsActions weaponsActions;
+    PlayerControls.MeleeActions meleeActions;
+    PlayerControls.SwitchActions switchActions;
+
 
     Vector2 horizontalInput;
     Vector2 mouseInput;
@@ -22,14 +28,24 @@ public class InputManager : MonoBehaviour
         controls = new PlayerControls();
         groundMovement = controls.GroundMovement;
         interactionActions = controls.Interactions;
+        weaponsActions = controls.Weapons;
+        meleeActions = controls.Melee;
+        switchActions = controls.Switch;
+
         // groundMovement.[action].performed += context => do something
         groundMovement.HorizontalMovement.performed += ctx => horizontalInput = ctx.ReadValue<Vector2>();
 
-        groundMovement.Jump.performed += _ => movement.OnJumpPressed();
 
         groundMovement.MouseX.performed += ctx => mouseInput.x = ctx.ReadValue<float>();
         groundMovement.MouseY.performed += ctx => mouseInput.y = ctx.ReadValue<float>();
 
+        weaponsActions.Shoot.performed += _ => weapons.Tirer();
+        weaponsActions.Reload.performed += _ => weapons.Recharger();
+
+        switchActions.Primaire.performed += _ => weaponSwitch.SwitchPrimaire();
+        switchActions.Secondaire.performed += _ => weaponSwitch.SwitchSecondaire();
+
+        meleeActions.Swing.performed += _ => melee.Attaque();
 
         //ligne de code pour interacation
         interactionActions.PickUp.performed += _ => pickUpAllow.SetPickupAlllowed(true);
